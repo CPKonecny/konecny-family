@@ -1,0 +1,27 @@
+title: "From the Mayflower to the Midwest — The Konecny Family (Condensed Master Draft)"
+description: "A web-first, review-ready condensed draft of the Konecny family history book project."
+theme: minima
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+author: "Christopher Peter Konecny"
+permalink: pretty
+collections:
+  chapters:
+    output: true
+    permalink: /:collection/:name/
+defaults:
+  - scope:
+      path: ""
+      type: "chapters"
+    values:
+      layout: page
+      toc: true
+      nav: true
+      comments: false
+      sitemap: true
