@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>From the Mayflower to the Midwest · Konecny Family History</title>
+  <meta name="description" content="A museum-style, interactive family history site for the Konecny lineage: Pilgrim roots, New England settlers, Nova Scotia Planters, and Czech immigrants—culminating in today's family." />
+  <style>
+    :root{
+      --bg: #0f172a;          /* slate-900 */
+      --panel: #111827;       /* gray-900  */
+      --muted: #94a3b8;       /* slate-400 */
+      --text: #e5e7eb;        /* gray-200  */
+      --brand: #38bdf8;       /* sky-400   */
+      --brand-2:#22d3ee;      /* cyan-400  */
+      --accent:#fbbf24;       /* amber-400 */
+      --success:#34d399;      /* emerald-400 */
+      --danger:#f87171;       /* rose-400 */
+      --card: #0b1220cc;      /* translucent */
+      --border: #1f2937;      /* gray-800 */
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    * { box-sizing: border-box }
+    html, body { margin: 0; padding: 0; background: linear-gradient(180deg,#0b1120 0%, #0f172a 50%, #0b1120 100%); color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; line-height: 1.6 }
+    a { color: var(--brand); text-decoration: none }
+    a:hover { text-decoration: underline }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1rem }
+    header.hero { position: relative; overflow: hidden; padding: 6rem 0 4rem; background: radial-gradient(1200px 400px at 10% -10%, rgba(56,189,248,.15), transparent), radial-gradient(1200px 400px at 90% 10%, rgba(34,211,238,.08), transparent) }
+    .title { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.1; margin: 0 0 .25rem; letter-spacing: .5px }
+    .subtitle { color: var(--muted); margin: .25rem 0 1.25rem }
+    .cta { display: inline-flex; gap: .75rem; align-items: center; padding: .8rem 1.1rem; background: linear-gradient(135deg,var(--brand),var(--brand-2)); color: #001018; font-weight: 700; border-radius: 14px; box-shadow: var(--shadow) }
+    nav.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px); background: rgba(2,6,23,.6); border-bottom: 1px solid var(--border) }
+    nav.top .navwrap { display: flex; align-items: center; justify-content: space-between; padding: .75rem 1rem }
+    .brand { display:flex; align-items:center; gap:.6rem; font-weight:800 }
+    .brand .dot { width: .85rem; height: .85rem; border-radius: 999px; background: linear-gradient(135deg,var(--brand),var(--accent)) }
+    .menu { display: flex; gap: .9rem; flex-wrap: wrap }
+    .menu a { padding: .4rem .6rem; border-radius: 10px }
+    .menu a:hover { background: rgba(148,163,184,.1) }
+
+    /* Cards */
+    .grid { display: grid; gap: 1rem }
+    @media (min-width: 768px){ .grid.cols-2 { grid-template-columns: 1fr 1fr } }
+    @media (min-width: 1024px){ .grid.cols-3 { grid-template-columns: repeat(3,1fr) } }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1rem; box-shadow: var(--shadow) }
+    .card h3 { margin-top: .2rem }
+    .muted { color: var(--muted) }
+    .tag { display:inline-block; font-size:.8rem; padding:.2rem .5rem; border:1px solid var(--border); border-radius:999px; color: var(--muted) }
+
+    /* Timeline */
+    .timeline { position: relative; margin: 1.5rem 0; padding-left: 1rem; }
+    .timeline::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: linear-gradient(var(--brand), var(--brand-2)); border-radius: 2px }
+    .tl-item { position: relative; margin: 1.25rem 0 1.25rem 1rem; padding-left: 1rem }
+    .tl-item::before { content:""; position: absolute; left: -1.1rem; top: .25rem; width: .75rem; height: .75rem; border-radius: 999px; background: var(--accent); outline: 3px solid rgba(251,191,36,.2) }
+    .tl-year { font-weight: 800; color: var(--accent) }
+
+    /* Image / media blocks */
+    figure { margin: 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); background: #0b1220 }
+    figure img { width: 100%; display: block }
+    figcaption { font-size: .9rem; color: var(--muted); padding: .6rem .8rem; border-top: 1px solid var(--border) }
+
+    /* Footer */
+    footer { margin-top: 4rem; border-top: 1px solid var(--border); background: #0b1120; padding: 2rem 0; color: var(--muted) }
+
+    /* Utilities */
+    .lead { font-size: 1.15rem }
+    .section { padding: 2.25rem 0 }
+    .h { font-size: clamp(1.4rem, 3.5vw, 2rem); margin: 0 0 .75rem }
+    .pill { padding: .15rem .5rem; border-radius: 999px; background: rgba(56,189,248,.12); color: var(--brand) }
+    .kbd { border:1px solid var(--border); padding:.1rem .35rem; border-radius:6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.8rem; color: var(--muted) }
+    .note { border-left: 3px solid var(--brand); padding:.75rem 1rem; background: rgba(34,211,238,.06); border-radius: 10px }
+    details { background: rgba(2,6,23,.6); border: 1px solid var(--border); border-radius: 12px; padding: .75rem 1rem }
+    details summary { cursor: pointer; font-weight: 700 }
+    .toc a { display:block; padding:.25rem 0 }
+    .placeholder { border:1px dashed #334155; background: rgba(15,23,42,.3); border-radius: 14px; padding: 1rem; color: #93c5fd }
+
+    /* Small helper to show anchors when hovering headings */
+    .anchor { opacity: 0; transition: opacity .2s ease }
+    .h:hover .anchor { opacity: .8 }
+  </style>
+</head>
+<body>
+  <nav class="top">
+    <div class="wrap navwrap">
+      <div class="brand"><span class="dot" aria-hidden></span><span>Konecny Genealogy</span></div>
+      <div class="menu" id="menu">
+        <a href="#executive-summary">Executive Summary</a>
+        <a href="#toc">Contents</a>
+        <a href="#part-i">Part I</a>
+        <a href="#part-iv">Part IV</a>
+        <a href="#visuals">Visuals</a>
+        <a href="#downloads">Downloads</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1 class="title">From the Mayflower to the Midwest</h1>
+      <p class="subtitle">A living, museum‑style chronicle of the Konecny family—Pilgrim roots, New England settlers, Nova Scotia Planters, and Czech immigrants—woven into today’s story.</p>
+      <div style="display:flex; gap:.75rem; flex-wrap:wrap; align-items:center">
+        <a class="cta" href="#executive-summary">Read the story</a>
+        <span class="tag">v1.0 · HTML‑only · Single file</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section wrap" id="executive-summary">
+      <h2 class="h">Executive Summary <a class="anchor" href="#executive-summary">#</a></h2>
+      <p class="lead">This site follows one American family across four centuries—from <strong>Pilgrim passengers</strong> John Howland & Elizabeth Tilley, to <strong>original proprietors</strong> in Massachusetts’ Swift River towns, to <strong>New England Planters</strong> in Nova Scotia, and <strong>Bohemian (Czech) immigrants</strong> who built new lives in Wisconsin—culminating in the present‑day Konecny line.</p>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Scope & Sources</h3>
+          <p class="muted">Structured from the project outline and family research (reunion book, scanned tree, narrative). Public‑facing details for living persons are privacy‑filtered. Replace placeholders as you publish.</p>
+        </div>
+        <div class="card">
+          <h3>Highlights</h3>
+          <ul>
+            <li>Documented descent from Howland–Tilley (Mayflower).</li>
+            <li>Wood family emergence in Plymouth/Middleborough.</li>
+            <li>Freeman & Harlow to Nova Scotia (Planters).</li>
+            <li>Quabbin towns—ancestral lands later submerged.</li>
+            <li>Konecny immigration from Bohemia to Wisconsin.</li>
+            <li>Union of lines in a 1947 Wisconsin marriage.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>How to Use</h3>
+          <p class="muted">Every heading is linkable. The <span class="kbd">Downloads</span> section points to PDFs and a family‑tree image. Drop photos/maps into the <em>assets/</em> folder and update <span class="kbd">src</span> paths below.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="toc">
+      <h2 class="h">Table of Contents <a class="anchor" href="#toc">#</a></h2>
+      <div class="grid cols-3 toc">
+        <div class="card">
+          <h3>Part I · Early Colonial Ancestors</h3>
+          <a href="#part-i">Overview</a>
+          <a href="#ch1">Ch. 1 — Pilgrim Origins: Howland–Tilley</a>
+          <a href="#ch2">Ch. 2 — Planting Roots: The Wood Family</a>
+        </div>
+        <div class="card">
+          <h3>Part II · Revolutionary & Civil War Eras</h3>
+          <a href="#ch3">Ch. 3 — Patriots & Pioneers</a>
+          <a href="#ch4">Ch. 4 — Independence to Union</a>
+        </div>
+        <div class="card">
+          <h3>Part III · Planters & Quabbin Heritage</h3>
+          <a href="#ch5">Ch. 5 — New England Planters (NS)</a>
+          <a href="#ch6">Ch. 6 — Quabbin Valley Roots</a>
+        </div>
+        <div class="card">
+          <h3>Part IV · Bohemian Immigration</h3>
+          <a href="#part-iv">Overview</a>
+          <a href="#ch7">Ch. 7 — From Bohemia to Wisconsin</a>
+        </div>
+        <div class="card">
+          <h3>Part V · A Union in 1947</h3>
+          <a href="#ch8">Ch. 8 — Marjorie Wood & Frank Konecny</a>
+          <a href="#ch9">Ch. 9 — Merging Legacies</a>
+        </div>
+        <div class="card">
+          <h3>Part VI–VII · Modern Generations</h3>
+          <a href="#ch10">Ch. 10 — Post‑war Prosperity</a>
+          <a href="#ch11">Ch. 11 — Late‑20th → 2000s</a>
+          <a href="#ch12">Ch. 12 — The Family Today</a>
+          <a href="#ch13">Ch. 13 — Reflections & Future</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART I -->
+    <section class="section wrap" id="part-i">
+      <h2 class="h">Part I — Early Colonial Ancestors & the Mayflower Line <a class="anchor" href="#part-i">#</a></h2>
+      <p class="muted">Focus: The 17th‑century beginnings—Mayflower passengers, Plymouth Colony, and the emergence of the Wood family in Middleborough.</p>
+      <details id="ch1" open>
+        <summary>Chapter 1 · Pilgrim Origins: John Howland & Elizabeth Tilley</summary>
+        <div class="timeline">
+          <div class="tl-item"><span class="tl-year">1620</span> · The <em>Mayflower</em> lands; Howland famously survives an overboard fall; Tilley family endures the first winter.</div>
+          <div class="tl-item"><span class="tl-year">ca. 1623</span> · Marriage of John Howland & Elizabeth Tilley; ten children reach adulthood, creating a vast descendant network.</div>
+          <div class="tl-item"><span class="tl-year">Legacy</span> · Among descendants: U.S. presidents and countless New England families. <em>[IMAGE PLACEHOLDER: Mayflower painting or Compact facsimile]</em></div>
+        </div>
+        <div class="placeholder">PHOTO PLACEHOLDER → <code>assets/mayflower.jpg</code><br/>Optional caption: “The Mayflower in Plymouth Harbor.”</div>
+      </details>
+      <details id="ch2">
+        <summary>Chapter 2 · Planting Roots in Plymouth Colony: The Wood Family Emerges</summary>
+        <p>Henry Wood marries Abigail Jenney (1644) and the Wood line roots in Middleborough. In the next generations, a key marriage—Jabez Wood Sr. to Hannah Nelson—links the Wood line back to Howland–Tilley.</p>
+        <div class="grid cols-2">
+          <figure>
+            <img src="assets/middleborough-map.png" alt="Map of Plymouth & Middleborough (17th c.)" />
+            <figcaption>Map placeholder: settlement locations and parish boundaries.</figcaption>
+          </figure>
+          <div class="note">RESEARCH NOTE: Add citations to vital records (marriages, deeds, jury lists). Include a small tree diagram illustrating the convergence.</div>
+        </div>
+      </details>
+    </section>
+
+    <!-- PART II -->
+    <section class="section wrap" id="part-ii">
+      <h2 class="h">Part II — Revolutionary & Civil War Eras <a class="anchor" href="#part-ii">#</a></h2>
+      <details id="ch3">
+        <summary>Chapter 3 · Patriots & Pioneers</summary>
+        <div class="timeline">
+          <div class="tl-item"><span class="tl-year">1756</span> · Birth of Philip Wood (noted as a Revolutionary War soldier). <span class="pill">[Docs pending]</span></div>
+          <div class="tl-item"><span class="tl-year">1787→</span> · Samuel Wood moves from Vermont toward Quebec, reflecting post‑war frontier shifts.</div>
+        </div>
+      </details>
+      <details id="ch4">
+        <summary>Chapter 4 · From Independence to Union</summary>
+        <p>By the mid‑1800s the family radiates west into New York, Illinois, and Wisconsin. The Civil War reshapes communities even when ancestors remain civilians in Union states.</p>
+        <div class="placeholder">DOC/IMAGE PLACEHOLDER → <code>assets/1850s-map-us.png</code> (migration arrows),<br/> <code>assets/civil-war-context.jpg</code> (contextual image)</div>
+      </details>
+    </section>
+
+    <!-- PART III -->
+    <section class="section wrap" id="part-iii">
+      <h2 class="h">Part III — New England Planters & Quabbin Heritage <a class="anchor" href="#part-iii">#</a></h2>
+      <details id="ch5">
+        <summary>Chapter 5 · The New England Planters (Nova Scotia)</summary>
+        <p>Patience Wood (sister to the direct line) marries Simeon Freeman; c.1761 they join ~8,000 Planters resettling Nova Scotia after the Acadian expulsion—founding communities like Liverpool.</p>
+        <figure>
+          <img src="assets/nova-scotia-planters.png" alt="Route map New England → Nova Scotia" />
+          <figcaption>Planters route map: Massachusetts to Liverpool, NS. <em>[Replace with your map artwork]</em></figcaption>
+        </figure>
+      </details>
+      <details id="ch6">
+        <summary>Chapter 6 · Quabbin Valley Roots</summary>
+        <p>Family proprietors help settle Swift River towns later <em>lost</em> to Boston’s Quabbin Reservoir (1930s). Four towns—Dana, Enfield, Greenwich, Prescott—were disincorporated; residents and cemeteries were relocated.</p>
+        <div class="grid cols-2">
+          <figure>
+            <img src="assets/quabbin-before.png" alt="Swift River towns before flooding" />
+            <figcaption>Before: Swift River Valley towns and farm lots.</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/quabbin-after.png" alt="Quabbin Reservoir overlay" />
+            <figcaption>After: Quabbin Reservoir overlay covering the former towns.</figcaption>
+          </figure>
+        </div>
+      </details>
+    </section>
+
+    <!-- PART IV -->
+    <section class="section wrap" id="part-iv">
+      <h2 class="h">Part IV — Czech / Bohemian Immigration (1889–1899) <a class="anchor" href="#part-iv">#</a></h2>
+      <details id="ch7">
+        <summary>Chapter 7 · From Bohemia to Wisconsin: The Konecny Immigrant Story</summary>
+        <p>Late‑19th‑century Konecny emigrants depart Bohemia (Austro‑Hungarian Empire) for Manitowoc County, Wisconsin. Work, language barriers, and a family tragedy shape Frank Konecny’s early life—and his resilience.</p>
+        <div class="grid cols-2">
+          <figure>
+            <img src="assets/bohemia-map.png" alt="Bohemia on a 19th‑century map of Europe" />
+            <figcaption>Bohemia → Bremen/Hamburg → New York → Wisconsin.</figcaption>
+          </figure>
+          <div>
+            <div class="placeholder">DOC PLACEHOLDER → Ship manifest scan <code>assets/manifest.jpg</code></div>
+            <div class="placeholder" style="margin-top:.75rem">PHOTO PLACEHOLDER → Early Manitowoc/Two Rivers factory scene <code>assets/manitowoc-1900.jpg</code></div>
+          </div>
+        </div>
+        <div class="note">Surname note: <strong>Konečný</strong> (Czech) ≈ “final/last”; Anglicized as <strong>Konecny</strong>. Add diacritics where desired in captions.</div>
+      </details>
+    </section>
+
+    <!-- PART V -->
+    <section class="section wrap" id="part-v">
+      <h2 class="h">Part V — Union of Colonial & Immigrant Lines (1947) <a class="anchor" href="#part-v">#</a></h2>
+      <details id="ch8">
+        <summary>Chapter 8 · A 1947 Union: Marjorie Wood & Frank Konecny</summary>
+        <div class="grid cols-2">
+          <div>
+            <p>Post‑WWII Wisconsin. Marjorie (journalism, UW–Madison) and Frank (U.S. Navy, Pacific) marry in 1947—symbolically joining colonial New England heritage with first‑generation immigrant grit.</p>
+            <ul class="muted">
+              <li>Frank: decades at a tent & awning company → general manager.</li>
+              <li>Marjorie: society editor & award‑winning journalist; community leader.</li>
+            </ul>
+          </div>
+          <figure>
+            <img src="assets/wedding-1947.jpg" alt="Wedding photo placeholder (1947)" />
+            <figcaption>[PHOTO PLACEHOLDER] Frank & Marjorie, Two Rivers, 1947.</figcaption>
+          </figure>
+        </div>
+      </details>
+      <details id="ch9">
+        <summary>Chapter 9 · Merging Legacies: Life as a Wood–Konecny Family</summary>
+        <p>Three children; deep community ties; travel after the kids are grown (Czechoslovakia, Europe, Asia, Australia). Family gatherings become legendary—<em>beer brats</em> and storytelling included.</p>
+        <div class="placeholder">RECIPE CARD PLACEHOLDER → “Uncle Frank’s Beer Brats” → <code>assets/beer-brats-card.png</code></div>
+      </details>
+    </section>
+
+    <!-- PART VI & VII -->
+    <section class="section wrap" id="part-vi-vii">
+      <h2 class="h">Part VI–VII — 20th Century Generations → Present Day <a class="anchor" href="#part-vi-vii">#</a></h2>
+      <details id="ch10">
+        <summary>Chapter 10 · Post‑war Prosperity (Children & Moves)</summary>
+        <p>Education, careers, and relocations (Syracuse, Los Angeles, Cincinnati, Milwaukee, later Tennessee). Family reunions sustain kinship across states.</p>
+      </details>
+      <details id="ch11">
+        <summary>Chapter 11 · Late‑20th Century into the 2000s</summary>
+        <p>Weddings, grandchildren, coast‑to‑coast branches, and a major 2019 reunion at Two Rivers, Wisconsin.</p>
+      </details>
+      <details id="ch12">
+        <summary>Chapter 12 · Entering the 21st Century: The Family Today</summary>
+        <p>Representative profile: career milestones, marriages, and children for the current generation. <strong>Privacy‑protected</strong> for public web; expand in a private family edition.</p>
+        <div class="placeholder">PHOTO GRID PLACEHOLDER → <code>assets/family-today/</code> (drop in portraits)</div>
+      </details>
+      <details id="ch13">
+        <summary>Chapter 13 · Reflections & Future Legacy</summary>
+        <p>Keeping the history alive: digitizing records, DNA corroboration, regular reunions, heritage trips (Plymouth, Quabbin, Czech Republic).</p>
+        <div class="grid cols-3">
+          <div class="card"><h3>To‑Do</h3><ul class="muted"><li>Scan & transcribe originals</li><li>Identify Bohemian parish</li><li>Document military service</li></ul></div>
+          <div class="card"><h3>DNA</h3><p class="muted">Placeholder for Y‑DNA/mtDNA/atDNA findings; add charts when ready.</p></div>
+          <div class="card"><h3>Visits</h3><p class="muted">Plan site trips: Plymouth, Middleborough, Liverpool NS, Two Rivers, Quabbin Overlook.</p></div>
+        </div>
+      </details>
+    </section>
+
+    <!-- VISUALS -->
+    <section class="section wrap" id="visuals">
+      <h2 class="h">Visuals & Graphics <a class="anchor" href="#visuals">#</a></h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Master Timeline</h3>
+          <div class="timeline" id="master-timeline">
+            <div class="tl-item"><span class="tl-year">1620</span> · Mayflower landing</div>
+            <div class="tl-item"><span class="tl-year">1644</span> · Henry Wood marries Abigail Jenney</div>
+            <div class="tl-item"><span class="tl-year">1759–68</span> · New England Planters migrate to Nova Scotia</div>
+            <div class="tl-item"><span class="tl-year">1930s</span> · Quabbin Reservoir disincorporates four towns</div>
+            <div class="tl-item"><span class="tl-year">1947</span> · Wood–Konecny marriage (Two Rivers, WI)</div>
+            <div class="tl-item"><span class="tl-year">2019</span> · Major family reunion (Two Rivers)</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Family Tree</h3>
+          <figure>
+            <img src="assets/family-tree.png" alt="Family tree overview placeholder" />
+            <figcaption>Drop an exported PNG or SVG of the tree here. (You can also link to a PDF in <a href="#downloads">Downloads</a>.)</figcaption>
+          </figure>
+        </div>
+        <div class="card">
+          <h3>Maps</h3>
+          <p class="muted">Include SVG/PNG maps—Pilgrim route, Planters route, Quabbin before/after, Konecny immigration path. Store in <code>assets/maps/</code>.</p>
+          <div class="placeholder">ASSET PLACEHOLDER → <code>assets/maps/</code></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOADS / LINKS -->
+    <section class="section wrap" id="downloads">
+      <h2 class="h">Downloads & Links <a class="anchor" href="#downloads">#</a></h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Project Documents</h3>
+          <ul>
+            <li><a href="assets/pdf/WoodReunionBook_2019.pdf">Wood Family Reunion Book (2019)</a> <span class="muted">· PDF</span></li>
+            <li><a href="assets/pdf/From-Mayflower-to-Midwest_Research.pdf">From the Mayflower to the Midwest — Research</a> <span class="muted">· PDF</span></li>
+            <li><a href="assets/pdf/Handwritten-Family-Tree.pdf">Scanned Handwritten Family Tree</a> <span class="muted">· PDF</span></li>
+          </ul>
+          <p class="muted">Place files in <code>assets/pdf/</code> and ensure filenames match.</p>
+        </div>
+        <div class="card">
+          <h3>External References</h3>
+          <ul>
+            <li><a href="https://www.themayflowersociety.org/" target="_blank" rel="noopener">General Society of Mayflower Descendants</a></li>
+            <li><a href="https://www.mass.gov/locations/quabbin-reservoir" target="_blank" rel="noopener">Quabbin Reservoir (Mass.gov)</a></li>
+            <li><a href="https://pier21.ca/" target="_blank" rel="noopener">Pier 21 — Canadian Immigration History</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="note" style="margin-top:1rem">Tip: If publishing publicly, keep living persons’ details high‑level. For a private family build, you can branch a second file with fuller bios.</div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div style="display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap">
+        <div>© <span id="year"></span> Konecny Family · Built for GitHub Pages. Single‑file HTML.</div>
+        <div>Theme accents inspired by New England skies & Wisconsin lakes. <a href="#top">Back to top</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // smooth scroll for anchor links (progressive enhancement)
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        const el = document.querySelector(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+  </script>
+</body>
+</html>
